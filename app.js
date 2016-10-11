@@ -1,8 +1,27 @@
-const express = require('express');
-const app = express();
+const express     = require('express');
+const app         = express();
+const MarkdownIt  = require('markdown-it');
+const fs          = require('fs');
+const Twig        = require('twig'),
+      twig = Twig.twig;
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+
+md = new MarkdownIt();
+app.set('views', __dirname + '/themes/beagle');
+app.set('view engine', 'twig');
+
+// This section is optional and can be used to configure twig.
+app.set('twig options', {
+    strict_variables: false
+});
+
+
+app.get('/', function(req, res){
+    var markdown = fs.readFileSync('./content/index.md').toString();
+    var content = md.render(markdown);
+    res.render('contentpage', {
+        content : content
+    });
 });
 
 app.listen(3000, function () {
