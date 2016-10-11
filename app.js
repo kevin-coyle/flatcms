@@ -2,6 +2,7 @@ const express     = require('express');
 const app         = express();
 const MarkdownIt  = require('markdown-it');
 const fs          = require('fs');
+const fm          = require('front-matter');
 const Twig        = require('twig'),
       twig = Twig.twig;
 
@@ -18,9 +19,12 @@ app.set('twig options', {
 
 app.get('/', function(req, res){
     var markdown = fs.readFileSync('./content/index.md').toString();
-    var content = md.render(markdown);
-    res.render('contentpage', {
-        content : content
+    var fmContent = fm(markdown);
+    console.log(fmContent);
+    var content = md.render(fmContent.body);
+    res.render(fmContent.attributes.theme, {
+        content : content,
+        title: fmContent.attributes.title
     });
 });
 

@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
+    "front-matter": "^2.1.0",
     "markdown-it": "^8.0.0",
     "twig": "^0.9.5"
   }
