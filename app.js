@@ -20,7 +20,6 @@ app.set('twig options', {
 app.get('/', function(req, res){
     var markdown = fs.readFileSync('./content/index.md').toString();
     var fmContent = fm(markdown);
-    console.log(fmContent);
     var content = md.render(fmContent.body);
     res.render(fmContent.attributes.theme, {
         content : content,
